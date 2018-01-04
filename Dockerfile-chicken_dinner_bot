@@ -1,0 +1,11 @@
+FROM golang:1.9-alpine
+
+ENV APP_HOME $GOPATH/src/chicken-dinner-bot
+WORKDIR $APP_HOME
+
+COPY ./src/golang.org/ $GOPATH/src/golang.org
+COPY ./src/github.com/ $GOPATH/src/github.com
+COPY ./src/chicken-dinner-bot/ $APP_HOME
+RUN go build
+
+CMD ["./chicken-dinner-bot"]

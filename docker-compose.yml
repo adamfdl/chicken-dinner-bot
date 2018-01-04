@@ -1,0 +1,19 @@
+version: '2'
+services:
+  redis:
+    container_name: redis
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  #################################################################
+
+  app:
+    container_name: chicken_dinner_bot
+    build:
+      context: .
+      dockerfile: Dockerfile-chicken_dinner_bot
+    env_file:
+      - "./src/chicken-dinner-bot/.env"
+    links:
+      - redis
