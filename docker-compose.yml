@@ -8,7 +8,7 @@ services:
 
   #################################################################
 
-  app:
+  chicken_dinner_bot:
     container_name: chicken_dinner_bot
     build:
       context: .
@@ -17,3 +17,15 @@ services:
       - "./src/chicken-dinner-bot/.env"
     links:
       - redis
+
+  #################################################################
+
+  pubgtrn_mock_api:
+    container_name: pubgtrn_mock_api
+    build:
+      context: .
+      dockerfile: Dockerfile-mock_api
+    ports:
+      - "3003:3000"
+    volumes:
+      - "./api.md:/usr/src/app/api.md"

@@ -1,5 +1,6 @@
 package constants
 
 const (
-	BOT_PING = "!ping"
+	COMMAND_PING        = "!ping"
+	COMMAND_LEADERBOARD = "!leaderboard"
 )

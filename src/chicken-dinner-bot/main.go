@@ -1,19 +1,25 @@
 package main
 
 import (
-	"chicken-dinner-bot/controller"
 	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
 
+	"chicken-dinner-bot/controller"
+
 	"github.com/bwmarrin/discordgo"
+	"github.com/sirupsen/logrus"
 )
 
 // Variables used for command line parameters
 var (
 	Token string
 )
+
+func init() {
+	logrus.SetFormatter(&logrus.TextFormatter{})
+}
 
 func main() {
 	dg, err := discordgo.New("Bot " + os.Getenv("BOT_TOKEN"))
@@ -23,7 +29,10 @@ func main() {
 	}
 
 	pingController := &controller.PingController{}
+	leaderboardController := &controller.LeaderBoardController{}
+
 	dg.AddHandler(pingController.Ping)
+	dg.AddHandler(leaderboardController.LeaderBoard)
 
 	// Open a websocket connection to Discord and begin listening.
 	err = dg.Open()

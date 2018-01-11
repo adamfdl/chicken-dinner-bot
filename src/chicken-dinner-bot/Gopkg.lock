@@ -20,14 +20,26 @@
   version = "v1.2.0"
 
 [[projects]]
+  name = "github.com/sirupsen/logrus"
+  packages = ["."]
+  revision = "d682213848ed68c0a260ca37d6dd5ace8423f5ba"
+  version = "v1.0.4"
+
+[[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
-  packages = ["nacl/secretbox","poly1305","salsa20/salsa"]
+  packages = ["nacl/secretbox","poly1305","salsa20/salsa","ssh/terminal"]
   revision = "0fcca4842a8d74bfddc2c96a073bd2a4d2a7a2e8"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sys"
+  packages = ["unix","windows"]
+  revision = "28a7276518d399b9634904daad79e18b44d481bc"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9d2ab42a3e1024b2404161bda34c17caa60f7655d145f8a5346a70aa5004fb1a"
+  inputs-digest = "34efc7916107cef8bbea3ec0466ab529dc8bc3a946ef05717815290dc958e136"
   solver-name = "gps-cdcl"
   solver-version = 1
