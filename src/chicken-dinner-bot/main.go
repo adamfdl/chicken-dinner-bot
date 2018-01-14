@@ -30,7 +30,11 @@ func main() {
 
 	pingController := &controller.PingController{}
 	leaderboardController := &controller.LeaderBoardController{}
+	addNewPlayerController := &controller.AddPlayerController{}
+	// TODO InitiatePlayer
+	// TODO UpdatePlayerScore
 
+	dg.AddHandler(addNewPlayerController.AddPlayer)
 	dg.AddHandler(pingController.Ping)
 	dg.AddHandler(leaderboardController.LeaderBoard)
 

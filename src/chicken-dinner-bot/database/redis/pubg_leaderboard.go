@@ -10,6 +10,8 @@ import (
 
 type PUBGLeaderboardOperator interface {
 	RetrieveLeaderBoard() ([]redis.Z, error)
+	AddNewPlayer(string, string) error
+	IncrementPlayerScore(string, string, int)
 }
 
 var pubgLeaderboardOperator PUBGLeaderboardOperator
@@ -43,19 +45,22 @@ func (*PUBGLeaderboardOperatorImpl) RetrieveLeaderBoard() ([]redis.Z, error) {
 	}
 }
 
-func (*PUBGLeaderboardOperatorImpl) CacheNewPlayer(discord_id, pubg_nick string, squad_wins, solo_wins int) {
+func (*PUBGLeaderboardOperatorImpl) AddNewPlayer(discord_id, pubg_nick string) error {
 	if err := shouldPerformOnRedis(); err != nil {
 		logrus.Warnf("[REDIS] %s", err.Error())
-		return
+		return err
 	}
 
-	member := fmt.Sprintf("discordID:%s-pubgNick:%s", discord_id, pubg_nick)
+	member := fmt.Sprintf("%s:%s", discord_id, pubg_nick)
 	if err := redisClient.ZAdd("pubg_leaderboard", redis.Z{Member: member, Score: 0}); err != nil {
 		logrus.Warnf("[REDIS] Cannot store new player from redis. Error: %s", err.Err())
+		return err.Err()
 	}
+
+	return nil
 }
 
-func (*PUBGLeaderboardOperatorImpl) UpdatePlayerScore(discord_id, pubg_nick string, score int) {
+func (*PUBGLeaderboardOperatorImpl) IncrementPlayerScore(discord_id, pubg_nick string, score int) {
 	if err := shouldPerformOnRedis(); err != nil {
 		logrus.Warnf("[REDIS] %s", err.Error())
 		return

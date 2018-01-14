@@ -11,3 +11,5 @@ docker-compose build $@
 docker-compose create $@
 docker-compose start $@
 docker rmi `docker images | grep '<none>' | awk '{ print $3 }'`
+
+redis-cli FLUSHALL
